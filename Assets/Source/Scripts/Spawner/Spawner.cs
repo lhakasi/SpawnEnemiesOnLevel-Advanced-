@@ -4,9 +4,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {    
     [SerializeField] private float _delay;
-    [SerializeField] private Transform[] _spawnPoints;
-
-    private Point _point;    
+    [SerializeField] private Point[] _spawnPoints;      
     
     private bool _isSpawning = true;
 
@@ -19,13 +17,11 @@ public class Spawner : MonoBehaviour
 
         while (_isSpawning)
         {
-            Transform spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+            Point spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
 
-            _point = spawnPoint.GetComponent<Point>();
+            Enemy enemy = Instantiate(spawnPoint.EnemyTemplate, spawnPoint.transform.position, Quaternion.identity);
 
-            GameObject enemy = Instantiate(_point.EnemyTemplate.gameObject, spawnPoint.position, Quaternion.identity);
-
-            enemy.GetComponent<EnemyMovement>().SetTarget(_point.DestinationPoint);
+            enemy.GetComponent<EnemyMovement>().SetTarget(spawnPoint.DestinationPoint);
 
             yield return delay;
         }
