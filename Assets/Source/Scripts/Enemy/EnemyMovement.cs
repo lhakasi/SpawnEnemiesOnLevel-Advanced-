@@ -59,7 +59,7 @@ public class EnemyMovement : MonoBehaviour
         _direction = (_target.transform.position - transform.position).normalized;
 
     private void Move() =>
-        _rigidbody2D.velocity = _direction * _speed;
+        _rigidbody2D.velocity = _direction * _speed * Time.deltaTime;
 
     private void Stop() =>
         _rigidbody2D.velocity = Vector2.zero;
